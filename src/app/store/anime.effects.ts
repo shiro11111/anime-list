@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AnimeService } from './anime.service';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Anime } from '../models/anime';
-import { LoadAnimeListSuccess } from './anime.actions';
+import { AddAnime, AddAnimeFail, AddAnimeSuccess, LoadAnimeListSuccess } from './anime.actions';
+import { Added } from '../models/added';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
 @Injectable()
 
@@ -17,5 +20,13 @@ export class AnimeEffects {
     switchMap(() => this.service.loadAnimeList().pipe(
       map((res: Anime[]) => (new LoadAnimeListSuccess(res)))
     ))
+  );
+
+  @Effect() addAnime$ = this.actions$.pipe(
+    ofType('ADD_ANIME'),
+    map((action: AddAnime) => action.payload as Anime),
+    switchMap((payload: Anime) => this.service.addAnime(payload).pipe(
+      map((res: Added) => new AddAnimeSuccess(res)),
+      catchError((error: HttpErrorResponse) => of(new AddAnimeFail(error)))))
   );
 }

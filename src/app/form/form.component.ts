@@ -31,6 +31,6 @@ export class FormComponent implements OnInit {
   }
 
   addAnime(): void {
-  this.store.dispatch(new AddAnime(this.form.get('anime').value));
+  this.store.dispatch(new AddAnime(this.form.value));
   }
 }

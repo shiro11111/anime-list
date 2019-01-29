@@ -8,9 +8,14 @@ import { Anime } from '../models/anime';
 })
 export class AnimeService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   loadAnimeList(): Observable<Anime[]> {
     return this.http.get('http://localhost:3000/api/anime/list') as Observable<Anime[]>;
+  }
+
+  addAnime(anime: Anime): any {
+    return this.http.post('http://localhost:3000/api/anime/add', anime);
   }
 }
