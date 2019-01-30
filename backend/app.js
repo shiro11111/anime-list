@@ -52,7 +52,12 @@ app.post('/api/anime/add', (req, res, next) => {
 });
 
 app.get('/api/anime/list', (req, res, next) => {
-  Anime.find()
+  const params = req.query;
+  const queryKeys = Object.keys(params);
+  const queryArr = queryKeys.map(key => ({[key]: new RegExp('^' + params[key], 'i')}))
+    .reduce((prev, curr) => ({...prev, ...curr}), {});
+
+  Anime.find(queryArr)
     .then(animeResp => {
       res.status(200).json(animeResp)
     })

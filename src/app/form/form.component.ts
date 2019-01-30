@@ -14,7 +14,9 @@ export class FormComponent implements OnInit {
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private store: Store<AppState>) { }
+              private store: Store<AppState>
+  ) {
+  }
 
   ngOnInit() {
     this.createForm();
@@ -24,13 +26,13 @@ export class FormComponent implements OnInit {
     this.form = this.fb.group({
       title: null,
       description: null,
-      releasedate: null,
+      releaseDate: null,
       studio: null,
       genre: null
     });
   }
 
   addAnime(): void {
-  this.store.dispatch(new AddAnime(this.form.value));
+    this.store.dispatch(new AddAnime(this.form.value));
   }
 }

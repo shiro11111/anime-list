@@ -9,6 +9,10 @@ export const LOAD_ANIME_LIST_FAIL = 'LOAD_ANIME_LIST_FAIL';
 export const ADD_ANIME = 'ADD_ANIME';
 export const ADD_ANIME_SUCCESS = 'ADD_ANIME_SUCCESS';
 export const ADD_ANIME_FAIL = 'ADD_ANIME_FAIL';
+export const CHANGE_ANIME_PARAMS = 'CHANGE_ANIME_PARAMS';
+export const DELETE_ANIME = 'DELETE_ANIME';
+export const DELETE_ANIME_SUCCESS = 'DELETE_ANIME_SUCCESS';
+export const DELETE_ANIME_FAIL = 'DELETE_ANIME_FAIL';
 
 export class LoadAnimeList implements Action {
   readonly  type = LOAD_ANIME_LIST;
@@ -39,5 +43,25 @@ export class AddAnimeFail implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class ChangeListParams implements Action {
+  readonly type = CHANGE_ANIME_PARAMS;
+  constructor(public payload: Anime) {}
+}
 
-export type AnimeActions = LoadAnimeList | LoadAnimeListSuccess | LoadAnimeListFail |AddAnime | AddAnimeSuccess | AddAnimeFail;
+export class DeleteAnime implements  Action {
+  readonly  type = DELETE_ANIME;
+  constructor(public payload: string) {}
+}
+
+export class DeleteAnimeSuccess implements  Action {
+  readonly  type = DELETE_ANIME_SUCCESS;
+  constructor(public payload = null) {}
+}
+export class DeleteAnimeFail implements  Action {
+  readonly  type = DELETE_ANIME_FAIL;
+  constructor(public payload: HttpErrorResponse) {}
+}
+
+
+export type AnimeActions = LoadAnimeList | LoadAnimeListSuccess | LoadAnimeListFail |AddAnime | AddAnimeSuccess | AddAnimeFail |
+  ChangeListParams | DeleteAnime | DeleteAnimeSuccess | DeleteAnimeFail;

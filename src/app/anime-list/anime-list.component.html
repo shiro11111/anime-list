@@ -1,1 +1,46 @@
-<pre>{{list$ | async | json}}</pre>
+<!--<pre>{{list$ | async | json}}</pre>-->
+
+<form [formGroup]="form">
+  <div>
+    <mat-form-field>
+      <input matInput formControlName="title" placeholder="search for title">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <input matInput formControlName="description" placeholder="search for description">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <input matInput formControlName="releaseDate" placeholder="search for releaseDate">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <input matInput formControlName="genre" placeholder="search for genre">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <input matInput formControlName="studio" placeholder="search for studio">
+    </mat-form-field>
+  </div>
+
+</form>
+
+<pre>{{params$ | async | json}}</pre>
+
+<ng-container *ngIf="(list$ | async)">
+  <mat-card class="mb-3" *ngFor="let item of (list$ | async)">
+    <div>title: {{ item.title }}</div>
+    <div>releaseDate: {{ item.releaseDate }}</div>
+    <div>description: {{ item.description }}</div>
+    <div>studio: {{ item.studio }}</div>
+    <button (click)="onDelete(item?._id)">Delete</button>
+  </mat-card>
+</ng-container>

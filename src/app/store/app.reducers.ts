@@ -10,3 +10,5 @@ export interface AppState {
 export const reducers: ActionReducerMap<AppState> = {
   animeState: animeReducer
 };
+
+export const getAnimeState = (state: AppState) => state.animeState;

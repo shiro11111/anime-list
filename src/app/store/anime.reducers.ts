@@ -2,7 +2,7 @@ import { Anime } from '../models/anime';
 import {
   ADD_ANIME, ADD_ANIME_FAIL,
   ADD_ANIME_SUCCESS,
-  AnimeActions,
+  AnimeActions, CHANGE_ANIME_PARAMS, DELETE_ANIME,
   LOAD_ANIME_LIST,
   LOAD_ANIME_LIST_FAIL,
   LOAD_ANIME_LIST_SUCCESS
@@ -12,11 +12,15 @@ import { Added } from '../models/added';
 export interface AnimeState {
   animeList: Anime[];
   animeAdd: Added;
+  animeListParams: Anime;
+  delete: string;
 }
 
 const initialState: AnimeState = {
   animeList: [],
-  animeAdd: {}
+  animeAdd: {},
+  animeListParams: null,
+  delete: null
 };
 
 export function animeReducer(state = initialState, action: AnimeActions) {
@@ -50,7 +54,19 @@ export function animeReducer(state = initialState, action: AnimeActions) {
       return {
         ...state
       };
+    case CHANGE_ANIME_PARAMS:
+      return {
+        ...state,
+        animeListParams: action.payload
+      };
+    case DELETE_ANIME:
+      return {
+        ...state,
+        delete: action.payload
+      };
     default:
       return state;
   }
 }
+
+export const getAnimeParamsState = (state: AnimeState) => state.animeListParams;

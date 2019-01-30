@@ -14,7 +14,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FormComponent } from './form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatInputModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,14 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
     FormComponent,
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
+    RouterModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
     HttpClientModule,
+    MatCardModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
       AnimeEffects
