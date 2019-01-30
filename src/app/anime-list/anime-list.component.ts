@@ -3,12 +3,12 @@ import { Anime } from '../models/anime';
 import { Observable } from 'rxjs';
 import { AppState } from '../store/app.reducers';
 import { select, Store } from '@ngrx/store';
-import { ChangeListParams, DeleteAnime, LoadAnimeList } from '../store/anime.actions';
+import { ChangeListParams, DeleteAnime, DeleteAnimeClear, LoadAnimeList } from '../store/anime.actions';
 import { AnimeState } from '../store/anime.reducers';
 import { filter, map } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { getListParams } from '../store/anime.selectors';
+import { getAnimeDeleteSuccess, getListParams } from '../store/anime.selectors';
 
 @Component({
   selector: 'app-anime-list',
@@ -18,6 +18,7 @@ import { getListParams } from '../store/anime.selectors';
 export class AnimeListComponent implements OnInit {
   form: FormGroup;
   list$: Observable<Anime[]>;
+  deleteSuccess$: Observable<boolean>;
   params$: Observable<Anime>;
 
   constructor(private store: Store<AppState>,
@@ -31,6 +32,7 @@ export class AnimeListComponent implements OnInit {
     this.store.dispatch(new LoadAnimeList());
 
     this.params$ = this.store.pipe(select(getListParams));
+    this.deleteSuccess$ = this.store.pipe(select(getAnimeDeleteSuccess));
 
     this.list$ = this.store.select('animeState').pipe(
       map((state: AnimeState) => state && state.animeList));
@@ -47,11 +49,17 @@ export class AnimeListComponent implements OnInit {
       this.store.dispatch(new ChangeListParams(params));
       this.store.dispatch(new LoadAnimeList());
     });
+
+    this.deleteSuccess$.pipe(
+      filter((success: boolean) => success)
+    ).subscribe((success: boolean) => {
+      this.store.dispatch(new LoadAnimeList());
+      this.store.dispatch(new DeleteAnimeClear());
+    });
   }
 
   onDelete(id: string): void {
     this.store.dispatch(new DeleteAnime(id));
-    this.store.dispatch(new LoadAnimeList());
   }
 
   private createForm(): void {

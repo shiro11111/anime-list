@@ -13,6 +13,7 @@ export const CHANGE_ANIME_PARAMS = 'CHANGE_ANIME_PARAMS';
 export const DELETE_ANIME = 'DELETE_ANIME';
 export const DELETE_ANIME_SUCCESS = 'DELETE_ANIME_SUCCESS';
 export const DELETE_ANIME_FAIL = 'DELETE_ANIME_FAIL';
+export const DELETE_ANIME_CLEAR = 'DELETE_ANIME_CLEAR';
 
 export class LoadAnimeList implements Action {
   readonly  type = LOAD_ANIME_LIST;
@@ -55,13 +56,19 @@ export class DeleteAnime implements  Action {
 
 export class DeleteAnimeSuccess implements  Action {
   readonly  type = DELETE_ANIME_SUCCESS;
-  constructor(public payload = null) {}
+  constructor(public payload: Added) {}
 }
+
 export class DeleteAnimeFail implements  Action {
   readonly  type = DELETE_ANIME_FAIL;
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class DeleteAnimeClear implements  Action {
+  readonly  type = DELETE_ANIME_CLEAR;
+  constructor(public payload = null) {}
+}
+
 
 export type AnimeActions = LoadAnimeList | LoadAnimeListSuccess | LoadAnimeListFail |AddAnime | AddAnimeSuccess | AddAnimeFail |
-  ChangeListParams | DeleteAnime | DeleteAnimeSuccess | DeleteAnimeFail;
+  ChangeListParams | DeleteAnime | DeleteAnimeSuccess | DeleteAnimeFail | DeleteAnimeClear;

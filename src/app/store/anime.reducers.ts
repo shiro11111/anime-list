@@ -2,7 +2,7 @@ import { Anime } from '../models/anime';
 import {
   ADD_ANIME, ADD_ANIME_FAIL,
   ADD_ANIME_SUCCESS,
-  AnimeActions, CHANGE_ANIME_PARAMS, DELETE_ANIME,
+  AnimeActions, CHANGE_ANIME_PARAMS, DELETE_ANIME, DELETE_ANIME_CLEAR, DELETE_ANIME_SUCCESS,
   LOAD_ANIME_LIST,
   LOAD_ANIME_LIST_FAIL,
   LOAD_ANIME_LIST_SUCCESS
@@ -13,7 +13,7 @@ export interface AnimeState {
   animeList: Anime[];
   animeAdd: Added;
   animeListParams: Anime;
-  delete: string;
+  delete: Added;
 }
 
 const initialState: AnimeState = {
@@ -61,8 +61,17 @@ export function animeReducer(state = initialState, action: AnimeActions) {
       };
     case DELETE_ANIME:
       return {
+        ...state
+      };
+    case DELETE_ANIME_SUCCESS:
+      return {
         ...state,
         delete: action.payload
+      };
+    case DELETE_ANIME_CLEAR:
+      return {
+        ...state,
+        delete: null
       };
     default:
       return state;
@@ -70,3 +79,4 @@ export function animeReducer(state = initialState, action: AnimeActions) {
 }
 
 export const getAnimeParamsState = (state: AnimeState) => state.animeListParams;
+export const getAnimeDeleteState = (state: AnimeState) => state.delete;

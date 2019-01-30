@@ -47,7 +47,7 @@ export class AnimeEffects {
     ofType('DELETE_ANIME'),
     map((action: DeleteAnime) => action.payload as string),
     switchMap((payload: string) => this.service.deleteAnime(payload).pipe(
-      map((res: Added) => new DeleteAnimeSuccess()),
+      map((res: Added) => new DeleteAnimeSuccess(res)),
       catchError((error: HttpErrorResponse) => of(new DeleteAnimeFail(error)))))
   );
 }
