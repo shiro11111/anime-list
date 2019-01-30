@@ -13,3 +13,10 @@ export const getAnimeDeleteSuccess = createSelector(
   getDeleteState,
   (state: Added) => state && state.success
 );
+
+export const getAddState = createSelector(getAnimeState, fromReducer.getAnimeAddState);
+
+export const getAnimeAddSuccess = createSelector(
+  getAddState,
+  (state: Added) => state && state.success
+);

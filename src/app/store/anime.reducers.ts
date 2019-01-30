@@ -1,6 +1,6 @@
 import { Anime } from '../models/anime';
 import {
-  ADD_ANIME, ADD_ANIME_FAIL,
+  ADD_ANIME, ADD_ANIME_CLEAR, ADD_ANIME_FAIL,
   ADD_ANIME_SUCCESS,
   AnimeActions, CHANGE_ANIME_PARAMS, DELETE_ANIME, DELETE_ANIME_CLEAR, DELETE_ANIME_SUCCESS,
   LOAD_ANIME_LIST,
@@ -73,6 +73,11 @@ export function animeReducer(state = initialState, action: AnimeActions) {
         ...state,
         delete: null
       };
+    case ADD_ANIME_CLEAR:
+      return {
+        ...state,
+        animeAdd: null
+      };
     default:
       return state;
   }
@@ -80,3 +85,4 @@ export function animeReducer(state = initialState, action: AnimeActions) {
 
 export const getAnimeParamsState = (state: AnimeState) => state.animeListParams;
 export const getAnimeDeleteState = (state: AnimeState) => state.delete;
+export const getAnimeAddState = (state: AnimeState) => state.animeAdd;

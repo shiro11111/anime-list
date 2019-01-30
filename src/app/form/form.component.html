@@ -1,34 +1,35 @@
 <form [formGroup]="form">
   <div>
     <mat-form-field>
-      <input matInput formControlName="title" placeholder="title">
+      <input matInput formControlName="title" placeholder="title" required>
     </mat-form-field>
   </div>
 
   <div>
     <mat-form-field>
-      <input matInput formControlName="description" placeholder="description">
+      <input matInput formControlName="description" placeholder="description" required>
     </mat-form-field>
   </div>
 
   <div>
     <mat-form-field>
-      <input matInput formControlName="releaseDate" placeholder="releaseDate">
+      <input matInput formControlName="releaseDate" placeholder="releaseDate" required>
     </mat-form-field>
   </div>
 
   <div>
     <mat-form-field>
-      <input matInput formControlName="studio" placeholder="studio">
+      <input matInput formControlName="studio" placeholder="studio" required>
     </mat-form-field>
   </div>
 
   <div>
     <mat-form-field>
-      <input matInput formControlName="genre" placeholder="genre">
+      <input matInput formControlName="genre" placeholder="genre" required>
     </mat-form-field>
   </div>
 
 
   <button mat-button (click)="addAnime()">Add anime</button>
 </form>
+

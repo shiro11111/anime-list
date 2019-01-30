@@ -14,7 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FormComponent } from './form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatInputModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     BrowserModule,
     RouterModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
@@ -43,6 +44,8 @@ import { AppRoutingModule } from './app-routing.module';
     StoreDevtoolsModule.instrument()
   ],
   providers: [AnimeService],
+  entryComponents: [FormComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
