@@ -5,7 +5,7 @@ import { AppState } from '../store/app.reducers';
 import { select, Store } from '@ngrx/store';
 import { ChangeListParams, DeleteAnime, DeleteAnimeClear, LoadAnimeList } from '../store/anime.actions';
 import { AnimeState } from '../store/anime.reducers';
-import { filter, map } from 'rxjs/operators';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { getAnimeDeleteSuccess, getListParams } from '../store/anime.selectors';
@@ -38,8 +38,8 @@ export class AnimeListComponent implements OnInit {
       map((state: AnimeState) => state && state.animeList));
 
     this.form.valueChanges.pipe(
-      filter((value: Anime) => !!value)
-    ).subscribe((value: Anime) => {
+      filter((value: Anime) => !!value),
+      debounceTime(3000)).subscribe((value: Anime) => {
       this.router.navigate(['./'], { queryParams: this.form.value });
     });
 
