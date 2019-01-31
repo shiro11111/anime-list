@@ -21,6 +21,14 @@ export class AnimeListComponent implements OnInit {
   deleteSuccess$: Observable<boolean>;
   params$: Observable<Anime>;
 
+  displayedColumns = [
+    'number',
+    'title',
+    'releaseDate',
+    'studio',
+    'actions'
+  ];
+
   constructor(private store: Store<AppState>,
               private fb: FormBuilder,
               private router: Router,

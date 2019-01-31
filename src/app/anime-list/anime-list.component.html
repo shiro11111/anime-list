@@ -33,14 +33,50 @@
 
 </form>
 
-<pre>{{params$ | async | json}}</pre>
+<!--<pre>{{params$ | async | json}}</pre>-->
 
-<ng-container *ngIf="(list$ | async)">
-  <mat-card class="mb-3" *ngFor="let item of (list$ | async)">
-    <div>title: {{ item.title }}</div>
-    <div>releaseDate: {{ item.releaseDate }}</div>
-    <div>description: {{ item.description }}</div>
-    <div>studio: {{ item.studio }}</div>
-    <button (click)="onDelete(item?._id)">Delete</button>
-  </mat-card>
+<mat-table [dataSource]="(list$ | async)">
+
+<ng-container matColumnDef="number">
+  <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+  <mat-cell *matCellDef="let anime">{{ (list$ | async).indexOf(anime) + 1 }}</mat-cell>
 </ng-container>
+
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+    <mat-cell *matCellDef="let anime">{{anime?.title}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="releaseDate">
+    <mat-header-cell *matHeaderCellDef>Release Date</mat-header-cell>
+    <mat-cell *matCellDef="let anime">{{ anime?.releaseDate }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="studio">
+    <mat-header-cell *matHeaderCellDef>Studio</mat-header-cell>
+    <mat-cell *matCellDef="let anime">{{ anime?.studio }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let anime">
+      <button mat-icon-button (click)="onDelete(anime?._id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+
+<!--<ng-container *ngIf="(list$ | async)">-->
+<!--<mat-card class="mb-3" *ngFor="let item of (list$ | async)">-->
+  <!--<div>title: {{ item.title }}</div>-->
+  <!--<div>releaseDate: {{ item.releaseDate }}</div>-->
+  <!--<div>description: {{ item.description }}</div>-->
+  <!--<div>studio: {{ item.studio }}</div>-->
+  <!--<button (click)="onDelete(item?._id)">Delete</button>-->
+<!--</mat-card>-->
+<!--</ng-container>-->
