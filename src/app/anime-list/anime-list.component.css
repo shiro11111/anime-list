@@ -1,0 +1,15 @@
+.mat-column-number {
+  flex: 0 0 75px;
+}
+
+.mat-column-title {
+  flex-grow: 1;
+}
+
+
+.mat-column-actions {
+}
+
+.mat-column-studio {
+  flex: 1 30%;
+}
