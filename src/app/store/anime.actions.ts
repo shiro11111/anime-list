@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Anime } from '../models/anime';
 import { Added } from '../models/added';
+import { Studio } from '../models/studio';
 
 export const LOAD_ANIME_LIST = 'LOAD_ANIME_LIST';
 export const LOAD_ANIME_LIST_SUCCESS = 'LOAD_ANIME_LIST_SUCCESS';
@@ -15,6 +16,9 @@ export const DELETE_ANIME_SUCCESS = 'DELETE_ANIME_SUCCESS';
 export const DELETE_ANIME_FAIL = 'DELETE_ANIME_FAIL';
 export const DELETE_ANIME_CLEAR = 'DELETE_ANIME_CLEAR';
 export const ADD_ANIME_CLEAR = 'ADD_ANIME_CLEAR';
+export const LOAD_STUDIO_LIST = 'LOAD_STUDIO_LIST';
+export const LOAD_STUDIO_LIST_SUCCESS = 'LOAD_STUDIO_LIST_SUCCESS';
+export const LOAD_STUDIO_LIST_FAIL = 'LOAD_STUDIO_LIST_FAIL';
 
 export class LoadAnimeList implements Action {
   readonly  type = LOAD_ANIME_LIST;
@@ -75,6 +79,22 @@ export class AddAnimeClear implements  Action {
   constructor(public payload = null) {}
 }
 
+export class LoadStudioList implements Action {
+  readonly  type = LOAD_STUDIO_LIST;
+}
+
+export class LoadStudioListSuccess implements Action {
+  readonly  type = LOAD_STUDIO_LIST_SUCCESS;
+  constructor(public payload: Studio[]) {}
+}
+
+export class LoadStudioListFail implements Action {
+  readonly  type = LOAD_STUDIO_LIST_FAIL;
+  constructor(public payload: HttpErrorResponse) {}
+}
+
+
 
 export type AnimeActions = LoadAnimeList | LoadAnimeListSuccess | LoadAnimeListFail |AddAnime | AddAnimeSuccess | AddAnimeFail |
-  ChangeListParams | DeleteAnime | DeleteAnimeSuccess | DeleteAnimeFail | DeleteAnimeClear | AddAnimeClear;
+  ChangeListParams | DeleteAnime | DeleteAnimeSuccess | DeleteAnimeFail | DeleteAnimeClear | AddAnimeClear | LoadStudioList |
+  LoadStudioListSuccess | LoadStudioListFail;

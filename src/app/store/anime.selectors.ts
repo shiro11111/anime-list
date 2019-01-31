@@ -20,3 +20,7 @@ export const getAnimeAddSuccess = createSelector(
   getAddState,
   (state: Added) => state && state.success
 );
+
+export const getStudioList = createSelector(
+  getAnimeState, fromReducer.getStudioListState
+);

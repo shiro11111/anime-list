@@ -5,22 +5,25 @@ import {
   AnimeActions, CHANGE_ANIME_PARAMS, DELETE_ANIME, DELETE_ANIME_CLEAR, DELETE_ANIME_SUCCESS,
   LOAD_ANIME_LIST,
   LOAD_ANIME_LIST_FAIL,
-  LOAD_ANIME_LIST_SUCCESS
+  LOAD_ANIME_LIST_SUCCESS, LOAD_STUDIO_LIST, LOAD_STUDIO_LIST_FAIL, LOAD_STUDIO_LIST_SUCCESS
 } from './anime.actions';
 import { Added } from '../models/added';
+import { Studio } from '../models/studio';
 
 export interface AnimeState {
   animeList: Anime[];
   animeAdd: Added;
   animeListParams: Anime;
   delete: Added;
+  studioList: Studio[];
 }
 
 const initialState: AnimeState = {
   animeList: [],
   animeAdd: {},
   animeListParams: null,
-  delete: null
+  delete: null,
+  studioList: []
 };
 
 export function animeReducer(state = initialState, action: AnimeActions) {
@@ -78,6 +81,19 @@ export function animeReducer(state = initialState, action: AnimeActions) {
         ...state,
         animeAdd: null
       };
+    case LOAD_STUDIO_LIST:
+      return {
+        ...state
+      };
+    case LOAD_STUDIO_LIST_SUCCESS:
+      return {
+        ...state,
+        studioList: action.payload
+      };
+    case LOAD_STUDIO_LIST_FAIL:
+      return {
+        ...state
+    };
     default:
       return state;
   }
@@ -86,3 +102,5 @@ export function animeReducer(state = initialState, action: AnimeActions) {
 export const getAnimeParamsState = (state: AnimeState) => state.animeListParams;
 export const getAnimeDeleteState = (state: AnimeState) => state.delete;
 export const getAnimeAddState = (state: AnimeState) => state.animeAdd;
+export const getStudioListState = (state: AnimeState) => state.studioList;
+

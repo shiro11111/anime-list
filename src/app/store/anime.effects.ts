@@ -10,7 +10,7 @@ import {
   DeleteAnime,
   DeleteAnimeFail,
   DeleteAnimeSuccess,
-  LoadAnimeListSuccess
+  LoadAnimeListSuccess, LoadStudioListFail, LoadStudioListSuccess
 } from './anime.actions';
 import { Added } from '../models/added';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,6 +18,7 @@ import { of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { getListParams } from './anime.selectors';
 import { AppState } from './app.reducers';
+import { Studio } from '../models/studio';
 
 @Injectable()
 
@@ -50,4 +51,11 @@ export class AnimeEffects {
       map((res: Added) => new DeleteAnimeSuccess(res)),
       catchError((error: HttpErrorResponse) => of(new DeleteAnimeFail(error)))))
   );
+
+  @Effect() loadStudioList$ = this.actions$.pipe(
+    ofType('LOAD_STUDIO_LIST'),
+    switchMap(() => this.service.loadStudioList().pipe(
+      map((res: Studio[]) => (new LoadStudioListSuccess(res))),
+      catchError((error: HttpErrorResponse) => of(new LoadStudioListFail(error)))
+    )));
 }

@@ -8,6 +8,7 @@ const connectionAddress = `mongodb+srv://shiro:${dbPass}@anime-cluster-1-armvd.m
 
 // Data models
 const Anime = require('./models/anime');
+const Studio = require('./models/animationStudio');
 
 const app = express();
 
@@ -74,6 +75,32 @@ app.delete('/api/anime/delete/:id', (req, res, next) => {
         message: 'Anime deleted!',
         success: true
       });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+app.post('/api/studio/add', (req, res, next) => {
+  const studio = new Studio({
+    name: req.body.name
+  });
+  studio.save();
+  res.status(200).json({
+    message: 'Studio added successfully',
+    success: true
+  })
+});
+
+app.get('/api/studio/list', (req, res, next) => {
+  const params = req.query;
+  const queryKeys = Object.keys(params);
+  const queryArr = queryKeys.map(key => ({[key]: new RegExp('^' + params[key], 'i')}))
+    .reduce((prev, curr) => ({...prev, ...curr}), {});
+
+  Studio.find(queryArr).sort({name: 1})
+    .then(response => {
+      res.status(200).json(response)
     })
     .catch(error => {
       console.log(error);

@@ -19,7 +19,9 @@
 
   <div>
     <mat-form-field>
-      <input matInput formControlName="studio" placeholder="studio" required>
+      <mat-select formControlName="studio">
+        <mat-option *ngFor="let studio of (studioList$ | async)" [value]="studio?.name">{{ studio?.name }}</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
 
