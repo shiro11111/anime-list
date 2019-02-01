@@ -1,5 +1,5 @@
 <!--<pre>{{list$ | async | json}}</pre>-->
-
+<div class="ml-3">
 <form [formGroup]="form">
   <div>
     <mat-form-field>
@@ -27,11 +27,15 @@
 
   <div>
     <mat-form-field>
-      <input matInput formControlName="studio" placeholder="search for studio">
+      <input matInput formControlName="studio" placeholder="search for studio" [matAutocomplete]="auto">
     </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let studio of (studioList$ | async)" [value]="studio?.name">{{ studio?.name }}</mat-option>
+    </mat-autocomplete>
   </div>
 
 </form>
+</div>
 
 <!--<pre>{{params$ | async | json}}</pre>-->
 
@@ -65,6 +69,16 @@
       </button>
     </mat-cell>
   </ng-container>
+
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let anime">
+      <button mat-button (click)="onEdit(anime)">
+        Edit
+      </button>
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 

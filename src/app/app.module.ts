@@ -15,6 +15,7 @@ import { FormComponent } from './form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
@@ -46,6 +47,7 @@ import { StudioListComponent } from './studio-list/studio-list.component';
     MatInputModule,
     MatTableModule,
     MatIconModule,
+    MatAutocompleteModule,
     HttpClientModule,
     MatCardModule,
     StoreModule.forRoot(reducers),

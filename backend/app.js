@@ -81,6 +81,18 @@ app.delete('/api/anime/delete/:id', (req, res, next) => {
     });
 });
 
+app.patch('/api/anime/edit/:id', (req, res, next) => {
+  Anime.findOneAndUpdate({_id: req.params.id}, req.body)
+    .then(success => {
+      res.status(200).json({
+        message: 'Update successfull!',
+        success: true
+      })
+    }).catch(error => {
+    console.log(error);
+  });
+});
+
 app.post('/api/studio/add', (req, res, next) => {
   const studio = new Studio({
     name: req.body.name

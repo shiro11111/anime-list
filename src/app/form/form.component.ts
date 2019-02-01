@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
-import { AddAnime, AddAnimeClear, LoadAnimeList, LoadStudioList } from '../store/anime.actions';
+import { AddAnime, AddAnimeClear, EditAnime, EditAnimeClear, LoadAnimeList, LoadStudioList } from '../store/anime.actions';
 import { Observable } from 'rxjs';
-import { getAnimeAddSuccess, getStudioList } from '../store/anime.selectors';
+import { getAnimeAddSuccess, getAnimeEditSuccess, getStudioList } from '../store/anime.selectors';
 import { filter } from 'rxjs/operators';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Studio } from '../models/studio';
+import { Anime } from '../models/anime';
 
 @Component({
   selector: 'app-form',
@@ -16,14 +17,15 @@ import { Studio } from '../models/studio';
 })
 export class FormComponent implements OnInit {
   addSuccess$: Observable<boolean>;
-
   studioList$: Observable<Studio[]>;
+  editSuccess$: Observable<boolean>;
 
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
               private store: Store<AppState>,
-              private dialogRef: MatDialogRef<FormComponent>
+              private dialogRef: MatDialogRef<FormComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: Anime
   ) {
   }
 
@@ -32,8 +34,14 @@ export class FormComponent implements OnInit {
 
     this.addSuccess$ = this.store.pipe(select(getAnimeAddSuccess));
     this.studioList$ = this.store.pipe(select(getStudioList));
+    this.editSuccess$ = this.store.pipe(select(getAnimeEditSuccess));
 
     this.store.dispatch(new LoadStudioList());
+
+    if (this.data) {
+      console.log(this.data);
+      this.form.patchValue(this.data);
+    }
 
     this.addSuccess$.pipe(
       filter((success: boolean) => success)
@@ -41,6 +49,14 @@ export class FormComponent implements OnInit {
       this.dialogRef.close();
       this.store.dispatch(new LoadAnimeList());
       this.store.dispatch(new AddAnimeClear());
+    });
+
+    this.editSuccess$.pipe(
+      filter((success: boolean) => success)
+    ).subscribe((success: boolean) => {
+      this.dialogRef.close();
+      this.store.dispatch(new LoadAnimeList());
+      this.store.dispatch(new EditAnimeClear());
     });
   }
 
@@ -58,4 +74,7 @@ export class FormComponent implements OnInit {
     this.store.dispatch(new AddAnime(this.form.value));
   }
 
+  editAnime(): void {
+    this.store.dispatch(new EditAnime({ _id: this.data._id, ...this.form.value }));
+  }
 }

@@ -31,7 +31,7 @@
     </mat-form-field>
   </div>
 
-
-  <button mat-button (click)="addAnime()">Add anime</button>
+  <button mat-button (click)="addAnime()" *ngIf="!data">Add anime</button>
+  <button mat-button (click)="editAnime()" *ngIf="data" [disabled]="form.pristine">Edit anime</button>
 </form>
 

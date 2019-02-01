@@ -9,7 +9,7 @@ import {
   AddAnimeSuccess,
   DeleteAnime,
   DeleteAnimeFail,
-  DeleteAnimeSuccess,
+  DeleteAnimeSuccess, EditAnime, EditAnimeFail, EditAnimeSuccess,
   LoadAnimeListSuccess, LoadStudioListFail, LoadStudioListSuccess
 } from './anime.actions';
 import { Added } from '../models/added';
@@ -57,5 +57,13 @@ export class AnimeEffects {
     switchMap(() => this.service.loadStudioList().pipe(
       map((res: Studio[]) => (new LoadStudioListSuccess(res))),
       catchError((error: HttpErrorResponse) => of(new LoadStudioListFail(error)))
+    )));
+
+  @Effect() editAnime$ = this.actions$.pipe(
+    ofType('EDIT_ANIME'),
+    map((action: EditAnime) => action.payload as Anime),
+    switchMap((payload: Anime) => this.service.editAnime(payload).pipe(
+      map((res: Added) => new EditAnimeSuccess(res)),
+      catchError((error: HttpErrorResponse) => of(new EditAnimeFail(error)))
     )));
 }

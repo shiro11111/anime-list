@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Anime } from '../models/anime';
 import { QueryParamsUtil } from '../utils/query-params.util';
 import { Studio } from '../models/studio';
+import { Added } from '../models/added';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +31,9 @@ export class AnimeService {
   loadStudioList(): Observable<Studio[]> {
     const url = `http://localhost:3000/api/studio/list`;
     return this.http.get(url) as Observable<Studio[]>;
+  }
+
+  editAnime(anime: Anime): Observable<Added> {
+    return this.http.patch(`http://localhost:3000/api/anime/edit/${anime._id}`, _.omit(anime, '_.id'));
   }
 }

@@ -24,3 +24,10 @@ export const getAnimeAddSuccess = createSelector(
 export const getStudioList = createSelector(
   getAnimeState, fromReducer.getStudioListState
 );
+
+export const getEditState = createSelector(getAnimeState, fromReducer.getAnimeEditState);
+
+export const getAnimeEditSuccess = createSelector(
+  getEditState,
+  (state: Added) => state && state.success
+);
